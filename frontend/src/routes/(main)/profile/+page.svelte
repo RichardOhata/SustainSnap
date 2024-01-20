@@ -1,13 +1,13 @@
-<script>
+<script lang='ts'>
     export let user = {
         name: "John Doe",
         username: "johndoe",
-        weekly rank: 0,
-        monthly rank: 0,
-        all time rank: 0,
-        snaps taken: 0,
-        total points: 0,
-        start date: 0000-00-00,
+        weekly_rank: 0,
+        monthly_rank: 0,
+        all_time_rank: 0,
+        snaps_taken: 0,
+        total_points: 0,
+        start_date: 0,
     };
 </script>
 
