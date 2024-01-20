@@ -40,6 +40,8 @@ visionClient.labelDetection('0_7jYE1-Za4AzaJdru.webp').then((result) =>{
       // Send a ping to confirm a successful connection
       await client.db("admin").command({ ping: 1 });
       console.log("Pinged your deployment. You successfully connected to MongoDB!");
+
+      ai_test();
     } finally {
       // Ensures that the client will close when you finish/error
       await client.close();
