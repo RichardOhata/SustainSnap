@@ -1,9 +1,12 @@
 // Import required modules
 const express = require('express');
 const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = "mongodb+srv://richardohata:sWjzFb4Z8Rc7BoYO@cluster0.crtjcno.mongodb.net/?retryWrites=true&w=majority";
+const dotenv = requrie('dotenv');
+
 // Create an Express application
 const app = express();
+dotenv.config();
+const uri = process.env.URI || " ";
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
