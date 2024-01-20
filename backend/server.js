@@ -1,6 +1,7 @@
 // Import required modules
 const express = require('express');
 const { MongoClient, ServerApiVersion } = require('mongodb');
+const vision = require("@google-cloud/vision");
 const uri = "mongodb+srv://richardohata:sWjzFb4Z8Rc7BoYO@cluster0.crtjcno.mongodb.net/?retryWrites=true&w=majority";
 // Create an Express application
 const app = express();
@@ -16,6 +17,22 @@ const client = new MongoClient(uri, {
       deprecationErrors: true,
     }
   });
+
+
+const visionClient = new vision.ImageAnnotatorClient({
+    keyFilename: "./silicon-cell-411821-cad25d072d74.json", // Change this later
+});
+
+visionClient.labelDetection('0_7jYE1-Za4AzaJdru.webp').then((result) =>{
+    const labels = results[0].labelAnnotations;
+
+    console.log("Labels:");
+    labels.forEach((label) => console.log(label.description));
+}).catch((err) => {
+    console.error("Error", err);
+});
+
+
   async function run() {
     try {
       // Connect the client to the server	(optional starting in v4.7)

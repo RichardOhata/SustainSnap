@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "silicon-cell-411821",
+  "private_key_id": "cad25d072d744b5e4e1f7b0d960ce5063b5fe8e8",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC9MlZbLB+LV93k\njSBq/efkJff/QMgRuu3BDJjMk1vwxIbF3l048Z6MlDGmmk1AD5F5qtMrJ0Kp12aV\nk0GVxgnOM8hFGZf55GEX74fWqx34XrkKd/iekng7e1n424MZz8jfqJBHcQWsB2PR\nHMeiP4ig/Bc1TVGt5z39/Of1abDSm0uTkQsNPhx6n2mTZdaHQkh422NTkErQOrZL\nr/DN65O5o1SD0nlQ9d2andj1TwVPKVA9MlWC4eToGD1s0RwP7SY3d6prFNRgpS04\nf4Pn5pdMz2lXJjeRFoa5V7FfuT34lRPFA9DryrqQp8Zn8MR3/7W3fu1eivWt3cY2\nuobFdHnRAgMBAAECggEAHNGxm3gITWKdhLEbRTZBn/Geqfg1YZSunvpAaOJwyKc5\npk39t5eqddx5sa3jDYUxki27YTaSQ3/G+wrFcengLX5FcoJ4XBLLLWkJsTaQkqLk\ndIabeEAfELnJ6zaOF5zx4AvI/8Y6Ex8Zt802pZggQ5wSxvDs+7Hz3KACZKdsTVrM\nvwroCVto5/iFJ6yfe6gyOgEUGwykfwoggUeF+bjKs81ruNeuTZ5ETLOepfkkxN6d\nyjRII603ypT5PZie4DYR17y+SHI9dBoI4+aj0Wft/25WnCVbdK8XPF/evRUfsbQI\nW5cUjiXty7g0b5cNA440UoEzHx/rHu3xSEQJ9OnOLwKBgQDy0X8DC7iw6fyinqZ2\njI8mOVBh1whCAY1q/3QhjdkwtmPwlOTf7Nr4ioiLdt2z17XFZeEIQlAzitc8/wHk\n1qy230vWoQSyDlrWWBm+a0M0Ukp0MnfWjfp5UhVdIj+pPF2dhzC/fLP2XZaYSIVe\nk1rwYSfKOhShSHsB/T2gOS0PkwKBgQDHd6XG+6ibBs4uRDylbc+oPdwZEkcOONts\nHJlgyWFSLeLduQxZ5s57YnZhywVihzDvu8lxmXNftdWa01ZyJ1UK9RFS3QfMTXlQ\nrTcwDtddgdWRitSomcRbK3RbjvZbkynODDnsK+16CH1N4BMprrnLJQFHITi0fyOr\nERPXATAHiwKBgQCtYM8LErSGhhyg1R1RKp4QEf6GTe8Uil062DpItysssB7+KqKe\nDVZw/yHuSyqUfmLJFyyuJAN2Oh3j7MWia3KZhSl2kDR1GvDbeb6wC5DJ7DRDccHF\nzkzZkbW1cX35TiQeFejF4bnyIPMluyqX1Cmr2AN8Typp2wIR8outOwYkxwKBgCET\n4lXhHdC3jDF392ankywfNgSiV04wd5KyG21Fd/Ic0eZa7YVrFQq5BVCqTjZMnPzk\ncz93Zv6UNNv79/XuN9gdU8YeCVED9/48+03o6CYFhdkg4Ksk9L75sc4NIyWEfgZB\nWMmlbzgxeDYV1peu9fiOJmwZQkIMY2nW5ydcdw6JAoGAcfubu8taKQXsJZVKx3A6\nPaIuh/FWj7jl3alQitXijR2w3zWWyZgSHA/01C4YUBsZnB09PjpmkRbn0iGj1rz3\nvWqbylA6Z0AR/kTFxGmOJvlJ5NRyeZNqjjwJt30iLfqIi1GCnghd15bZqfaibxSm\nmfSRZ/ODqAHGy9zoVPnxM8w=\n-----END PRIVATE KEY-----\n",
+  "client_email": "nwhacks@silicon-cell-411821.iam.gserviceaccount.com",
+  "client_id": "106217725950327321431",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/nwhacks%40silicon-cell-411821.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
