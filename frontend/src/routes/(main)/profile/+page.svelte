@@ -1,21 +1,54 @@
 <script lang='ts'>
-    export let user = {
+    let user = {
         name: "John Doe",
         username: "johndoe",
-        weekly_rank: 0,
-        monthly_rank: 0,
-        all_time_rank: 0,
-        snaps_taken: 0,
-        total_points: 0,
-        start_date: 0,
-    };
+        weeklyRank: 0,
+        monthlyRank: 0,
+        allTimeRank: 0,
+        snapsTaken: 0,
+        totalPoints: 0,
+        startDate: 0,
+        imageUrl: "a"
+    }
 </script>
 
 <style>
     .profile {
-        max-width: 430;
-        max-height: 932;
+        max-width: 600px;
+        width: 100%;
         margin: 0 auto;
-        padding: 20px;
+        text-align: center;
     }
+
+    .profile-image {
+        width: 100%;
+        height: auto;
+    }
+
+    .user-name {
+        font-size: 1rem;
+        margin-bottom: 10px;
+    }
+
+    .user-info {
+        font-size: 0.6rem;
+        margin-bottom: 10px;
+    }
+
+    .bio {
+        margin-top: 20px;
+    }
+
 </style>
+
+<div class="profile">
+    <h1>Me</h1>
+    <img class="profile-image" src={user.imageUrl} alt="Profile">
+    <p class="user-name">{user.name}</p>
+    <p class="user-info">Weekly Rank {user.weeklyRank}</p>
+    <p class="user-info">Monthly Rank {user.monthlyRank}</p>
+    <p class="user-info"> All Time Rank {user.allTimeRank}</p>
+    <p class="user-info"> Snaps Taken {user.snapsTaken}</p>
+    <p class="user-info"> Total Points {user.totalPoints}</p>
+    <p class="user-info"> Start Date {user.startDate}</p>
+ </div>
