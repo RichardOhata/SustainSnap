@@ -27,7 +27,7 @@
                                 },
                                 {
                                         "key": "Access-Control-Allow-Origin",
-                                        "value": "https://sustain-snap-frontend.vercel.app"
+                                        "value": "https://sustain-snap-frontend.vercel.app/"
                                 },
                                 {
                                         "key": "Access-Control-Allow-Methods",
