@@ -4,7 +4,6 @@ const session = require('express-session');
 const bodyParser = require('body-parser');
 const { process_image } = require('./openai');
 
-// Create an Express application
 const app = express();
 require('dotenv').config();
 const uri = process.env.URI || " ";
@@ -15,7 +14,7 @@ app.use(express.json({ limit: '50mb' }));
 app.use(session({
     secret: 'your-secret-key',
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: true
   }));
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -56,13 +55,14 @@ app.post('/api/data', (req, res) => {
 
 // Error handling middleware
 app.use(function (req, res, next) {
-  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, Content-Length, X-Requested-With");
   res.setHeader('Access-Control-Allow-Credentials', 'true');
   if (req.method === "OPTIONS") {
     return res.sendStatus(204);
   }
+  console.log(req.session);
   next();
 });
 
@@ -141,6 +141,7 @@ app.post('/login', async (req, res) => {
       return res.status(401).json({ error: 'Invalid email or password.', message: 'Invalid email or password.' });
     }
     req.session.username = user.username;
+    req.session.save();
     return res.status(200).json({ message: 'Login successful!', user });
   } catch (error) {
     console.error('Error during login:', error);
