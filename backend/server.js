@@ -242,6 +242,14 @@ app.get('/get_leaderboard', async (req, res) => {
       }
 })
 
+app.get('/logout', async (req, res) => {
+    res.cookie('access_token', '', {
+        httpOnly: true,
+        expires: new Date(0) 
+    });
+    return res.status(200).json({ message: "Logout success" });
+})
+
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
