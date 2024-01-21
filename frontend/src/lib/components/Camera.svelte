@@ -1,6 +1,6 @@
 <script>
   import { onMount } from "svelte";
-  import Preview from "./Preview.svelte";
+  import { createEventDispatcher } from "svelte";
 
   /**
    * @type {HTMLVideoElement | null}
@@ -9,7 +9,10 @@
   let loading = false;
   let cameraShown = false;
   let preview = false;
-  let capturedImageUrl;
+  export let capturedImageUrl;
+
+  const dispatch = createEventDispatcher();
+
   const showVideoCamera = async () => {
     const button = document.getElementById("clickButton");
     try {
@@ -42,6 +45,11 @@
       ctx.drawImage(videoSource, 0, 0, canvas.width, canvas.height);
       capturedImageUrl = canvas.toDataURL("image/png");
       preview = true;
+
+      dispatch("capture", {
+        capturedImageUrl,
+      });
+
       // Convert the canvas content to a Blob
       //   canvas.toBlob((blob) => {
       // // Create a download link
@@ -64,10 +72,6 @@
     showVideoCamera();
   });
 </script>
-
-{#if preview}
-  <Preview capturedImage={capturedImageUrl} />
-{/if}
 
 <div class="w-full h-full object-fill overflow-clip">
   {#if loading}

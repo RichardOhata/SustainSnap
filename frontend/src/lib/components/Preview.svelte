@@ -1,29 +1,39 @@
 <script>
-    import { onMount } from "svelte";
+  import { onMount } from "svelte";
+  import XCircle from "$lib/icons/XCircle.svelte";
+  import { createEventDispatcher } from "svelte";
 
-    export let capturedImage;
+  // random image url
+  export let capturedImage;
+  let imgElement;
 
-    onMount(() => {
-        const frame = document.getElementById("frame");
-        const img = frame.querySelector("img");
+  const dispatch = createEventDispatcher();
 
-        if (img) {
-            // Set the src attribute of the img element to the capturedImage
-            img.src = capturedImage;
-        }
-    });
+  $: {
+    if (imgElement) {
+      imgElement.src = capturedImage;
+    }
+  }
+
 </script>
 
-<div id="frame">
-    <img alt="previewImage">
+<div class="bg-white rounded-lg shadow-lg h-[80vh] w-full mx-4 flex flex-col justify-between p-4">
+    <div class="w-full flex items-center justify-center ">
+        <img alt="previewImage" class="rounded-full w-[80%] aspect-square object-cover" bind:this={imgElement} />
+    </div>
+
+    <div class="flex flex-col">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <div>
+        <button class="w-full flex items-center justify-center" on:click={() => {
+            dispatch("close");
+        }}>
+            <XCircle />
+        </button>
+    </div>
+
 </div>
-
-<style>
-
-#frame img {
-    /* width: 100%;
-    height: 100%; */
-    object-fit: cover; 
-    border-radius: 50%; 
-}
-</style>
