@@ -1,10 +1,16 @@
 <script>
-  import { onMount } from "svelte";
   import XCircle from "$lib/icons/XCircle.svelte";
   import { createEventDispatcher } from "svelte";
 
-  // random image url
   export let capturedImage;
+  export let data;
+
+  const binMap = {
+    R: "Recycling",
+    O: "Compost",
+    L: "Landfill",
+  };
+
   let imgElement;
 
   const dispatch = createEventDispatcher();
@@ -23,9 +29,9 @@
     </div>
 
     <div class="flex flex-col">
-        <span></span>
-        <span></span>
-        <span></span>
+        <span>{data?.label}</span>
+        <span>{binMap[data?.bin]}</span>
+        <span>{data?.fact}</span>
     </div>
 
     <div>

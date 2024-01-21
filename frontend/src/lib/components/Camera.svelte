@@ -78,7 +78,7 @@
     <h1>Loading</h1>
   {/if}
   <!-- svelte-ignore a11y-media-has-caption -->
-  <div class="relative">
+  <div class="relative overflow-hidden">
     <video bind:this={videoSource} class="w-full h-[85vh] object-cover" />
     {#if cameraShown}
       <div class="absolute inset-0 flex justify-center items-center z-10">

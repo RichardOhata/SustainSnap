@@ -1,5 +1,3 @@
-
-
 export const process_image = async (file) => {
 	const response = await fetch('/api/process_image', {
 		method: 'POST',
