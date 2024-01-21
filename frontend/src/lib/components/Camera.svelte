@@ -1,6 +1,6 @@
 <script>
     import { onMount } from "svelte";
-    import CameraIcon from '../icons/Camera.svelte';
+    import Preview from "./Preview.svelte";
 
     /**
 	 * @type {HTMLVideoElement | null}
@@ -8,6 +8,8 @@
     let videoSource = null;
     let loading = false;
     let cameraShown = false;
+    let preview = false;
+    let capturedImageUrl;
     const showVideoCamera = async () => {
         const button = document.getElementById("clickButton");
       try {
@@ -39,22 +41,23 @@
       const ctx = canvas.getContext('2d');
 
       ctx.drawImage(videoSource, 0, 0, canvas.width, canvas.height);
-
+      capturedImageUrl = canvas.toDataURL('image/png');
+        preview = true;
       // Convert the canvas content to a Blob
-      canvas.toBlob((blob) => {
-        // Create a download link
-        const link = document.createElement('a');
-        // @ts-ignore
-        link.href = URL.createObjectURL(blob);
-        link.download = 'screenshot.png';
+    //   canvas.toBlob((blob) => {
+        // // Create a download link
+        // const link = document.createElement('a');
+        // // @ts-ignore
+        // link.href = URL.createObjectURL(blob);
+        // link.download = 'screenshot.png';
 
-        // Append the link to the document and trigger a click event
-        document.body.appendChild(link);
-        link.click();
+        // // Append the link to the document and trigger a click event
+        // document.body.appendChild(link);
+        // link.click();
 
         // Remove the link from the document
-        document.body.removeChild(link);
-      }, 'image/png');
+        // document.body.removeChild(link);
+    //   }, 'image/png');
     }
   };
 
@@ -62,7 +65,10 @@
     showVideoCamera();
   })
   </script>
-  <div>
+
+<div>
+  {#if !preview}
+  
     {#if loading}
       <h1>Loading</h1>
     {/if}
@@ -72,20 +78,14 @@
          {#if cameraShown}
         <div class="absolute inset-0 flex justify-center items-center z-10">
             <button on:click={screenCapture} type="button" class=" outline outline-[5px] outline-offset-2 absolute bottom-5 text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-7 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                <!-- <CameraIcon/> -->
                 <span class="sr-only">Icon description</span>
                 </button>
         </div>
-    {/if}
+        {/if}
     </div>
+{:else}
 
-    <button on:click={showVideoCamera} id="clickButton">Show Camera</button>
-   
-    
-   
-    
-
-   
-    
+<Preview capturedImage={capturedImageUrl}/>
+{/if}
   </div>
   
