@@ -2,7 +2,7 @@
    import { goto } from "$app/navigation";
     let email= '';
     let password = '';
-  
+    let errorMsg = '';
     const handleLogin = async () => {
       try {
         const response = await fetch('http://localhost:3000/login', {
@@ -13,14 +13,17 @@
             body: JSON.stringify({email, password}),
         });
 
-        if (!response.ok) {
-          if (response.status===400) {
-            console.log(response);
-          }
-            throw new Error('Login Failed');
-        }
         const data = await response.json();
-        console.log('Login Successful', data);
+       
+        if (response.ok) {
+          console.log('Login Successful', data);
+        
+        } else if (response.status === 401) {
+          errorMsg = data.message;
+          throw new Error('Login Failed');
+        }
+       
+       
       } catch (error) {
         console.error('Error during login: ', error);
       }
@@ -85,4 +88,5 @@
     <br>
     <br>
     <p style="color:#58b096"> Don't have an account? <a style="color:black" href="#" on:click={() => goto('/signup')} >Sign Up</a></p>
+    <p style="color: red;">{errorMsg}</p> 
   </div>

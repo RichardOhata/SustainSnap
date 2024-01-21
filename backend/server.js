@@ -130,7 +130,7 @@ app.post('/login', async (req, res) => {
 
     if (!user) {
       // If no user is found, return an authentication error
-      return res.status(401).json({ error: 'Invalid email or password.' });
+      return res.status(401).json({ error: 'Invalid email or password.', message: 'Invalid email or password.' });
     }
     return res.status(200).json({ message: 'Login successful!', user });
   } catch (error) {

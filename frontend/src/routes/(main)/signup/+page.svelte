@@ -3,7 +3,7 @@
     let username = '';
     let email = '';
     let password = '';
-  
+    let errorMsg = '';
     const handleSignup = async () => {
         try {
     const response = await fetch('http://localhost:3000/signup', {
@@ -14,22 +14,21 @@
       body: JSON.stringify({username, email, password}),
     });
 
-    if (!response.ok) {
-        if (response.status === 400) {
-            console.log(response);
-        }
-      throw new Error('Signup failed');
-    }
-
     const data = await response.json();
+
+    if (response.ok) {
+        
     console.log('Signup successful:', data);
-    goto('/login');
-  } catch (error) {
+      goto('/login');
+    } else if (response.status === 400)
+      {
+            errorMsg = data.message;
+            throw new Error('Signup failed');
+        }
+    } catch (error) {
     console.error('Error during signup:', error);
   }
     }
-  
- 
   </script>
 
 <style>
@@ -97,5 +96,6 @@
 </div>
 
 <div class ="create-account-container flex flex-col items-center">
-<p style="color:#58b096"> Already have an account? <a style="color:black" href="#" on:click={() => goto('/login')} >Login</a></p>  
+<p style="color:#58b096"> Already have an account? <a style="color:black" href="#" on:click={() => goto('/login')} >Login</a></p> 
+<p style="color: red;">{errorMsg}</p> 
 </div>
