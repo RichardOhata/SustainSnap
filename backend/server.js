@@ -1,7 +1,9 @@
 // Import required modules
 const express = require('express');
 const { MongoClient, ServerApiVersion } = require('mongodb');
-const dotenv = requrie('dotenv');
+const dotenv = require('dotenv');
+const bodyParser = require('body-parser');
+const { process_image } = require('./openai');
 
 // Create an Express application
 const app = express();
@@ -13,38 +15,38 @@ app.use(express.json());
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(process.env.MONGODB_URI, {
-    serverApi: {
-      version: ServerApiVersion.v1,
-      strict: true,
-      deprecationErrors: true,
-    }
-  });
-
-
-
-  async function run() {
-    try {
-      // Connect the client to the server	(optional starting in v4.7)
-      await client.connect();
-      // Send a ping to confirm a successful connection
-      await client.db("admin").command({ ping: 1 });
-      console.log("Pinged your deployment. You successfully connected to MongoDB!");
-
-    } finally {
-      // Ensures that the client will close when you finish/error
-      await client.close();
-    }
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
   }
-  run().catch(console.dir);
+});
+
+async function run() {
+  try {
+    // Connect the client to the server	(optional starting in v4.7)
+    await client.connect();
+    // Send a ping to confirm a successful connection
+    await client.db("admin").command({ ping: 1 });
+    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+
+  } finally {
+    // Ensures that the client will close when you finish/error
+    await client.close();
+  }
+}
+run().catch(console.dir);
 
 // Sample route
 app.get('/', (req, res) => {
   res.send('Hello, Express!');
 });
 
-app.get('/api/hello', (req, res) => {
-  test_ai();
-  res.json({ message: 'Hello from server!' });
+app.post('/api/process_image', bodyParser.raw({ type: ['image/jpeg', 'image/png'], limit: '5mb' }), async (req, res) => {
+
+  let api_res = await process_image(req.body.toString('base64'), "base64");
+  res.json({ message: 'Hello from server!', data: api_res });
+
 });
 
 // Sample API route
@@ -55,20 +57,20 @@ app.post('/api/data', (req, res) => {
 });
 
 // Error handling middleware
-app.use(function(req, res, next)  {
-    res.setHeader("Access-Control-Allow-Origin", "*"); 
-    res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE, OPTIONS");
-    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, Content-Length, X-Requested-With");
-    if (req.method === "OPTIONS") {
-        return res.sendStatus(204);
-    }
-    next();
+app.use(function (req, res, next) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, Content-Length, X-Requested-With");
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(204);
+  }
+  next();
 });
 
 app.post('/signup', async (req, res) => {
-    const {username, email, password} = req.body;
-    console.log(username + email, password);
-     // Basic validation (you should add more robust validation in a real application)
+  const { username, email, password } = req.body;
+  console.log(username + email, password);
+  // Basic validation (you should add more robust validation in a real application)
   if (!username || !email || !password) {
     return res.status(400).json({ error: 'Invalid data. Please provide username, email, and password.' });
   }
