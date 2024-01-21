@@ -2,4 +2,7 @@
     import Camera from "../../lib/components/Camera.svelte";
 
 </script>
-<Camera/>
+
+<div class="w-full h-full">
+    <Camera/>
+</div>
