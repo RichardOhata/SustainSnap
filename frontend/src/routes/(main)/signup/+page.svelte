@@ -41,7 +41,6 @@
     align-items: center;
     border: 1 px solid whitesmoke;
     border-radius: 8px;
-    background-color: whitesmoke;
   }
 
   .create-account-container {
@@ -51,15 +50,14 @@
     justify-content: center;
     border: 1 px solid whitesmoke;
     border-radius: 8px;
-    background-color: whitesmoke;
   }
 
   button {
-      background-color: #4caf50;
+      background-color: rgba(27, 49, 28, 1);
       color: #fff;
       padding: 10px;
       border: none;
-      border-radius: 4px;
+      border-radius: 7px;
       cursor: pointer;
   }
 
@@ -67,22 +65,37 @@
     background-color: #45a049;
   }
 
+  input {
+      background: rgba(209, 238, 224, 1);
+      width: 100%;
+      height:7vh;
+      border-radius: 7px;
+      padding: 10px;
+    }
+
+  input::placeholder {
+      color: black;
+    }
+
 </style>
 
+<h1 class="text-center pt-5" style="font-weight: bold;">Signup</h1>
 <div class ="sign-up-container">
   <form on:submit|preventDefault={handleSignup}>
-    <label>
-      Username:
-      <input type="text" bind:value={username} />
-    </label>
-    <label>
-      Email:
-      <input type="email" bind:value={email} />
-    </label>
-    <label>
-      Password:
-      <input type="password" bind:value={password} />
-    </label>
-    <button type="submit">Signup</button>
+      <input type="text" placeholder= "Username" required bind:value={username} />
+    <br>
+    <br>
+      <input type="email" placeholder="Email" required bind:value={email} />
+      <br>
+      <br>
+      <input type="password" placeholder="Password" required bind:value={password} />
+      <br>
+      <br>
+      <div class=" flex flex-col items-center">
+    <button type="submit" style="width: 100%;">Signup</button>
   </form>
+</div>
+
+<div class ="create-account-container flex flex-col items-center">
+<p style="color:#58b096"> Already have an account? <a style="color:black" href="#" on:click={() => goto('/login')} >Login</a></p>  
 </div>

@@ -84,5 +84,5 @@
     <p>Forgot Password?</p>
     <br>
     <br>
-    <p style="color:#58b096"> Don't have an account? <a style="color:black" href="/#" on:click={() => goto('/signup')} >Sign Up</a></p>
+    <p style="color:#58b096"> Don't have an account? <a style="color:black" href="#" on:click={() => goto('/signup')} >Sign Up</a></p>
   </div>
