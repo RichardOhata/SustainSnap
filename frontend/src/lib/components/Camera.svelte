@@ -19,11 +19,9 @@
     try {
       loading = true;
       const stream = await navigator.mediaDevices.getUserMedia({
-        video: true,
+        video: { facingMode: "environment" },
       });
-      // @ts-ignore
       videoSource.srcObject = stream;
-      // @ts-ignore
       videoSource.play();
       loading = false;
       cameraShown = true;
@@ -39,7 +37,12 @@
     if (videoSource) {
       const canvas = document.createElement("canvas");
 
-      console.log(videoSource.videoWidth, videoSource.videoHeight, "size (in mb):", videoSource.videoWidth * videoSource.videoHeight * 4 / 1000000);
+      console.log(
+        videoSource.videoWidth,
+        videoSource.videoHeight,
+        "size (in mb):",
+        (videoSource.videoWidth * videoSource.videoHeight * 4) / 1000000
+      );
 
       canvas.width = videoSource.videoWidth / 2;
       canvas.height = videoSource.videoHeight / 2;
@@ -72,10 +75,24 @@
     }
   };
 
-
-
-
-
+  const fileUpload = () => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/*";
+    input.onchange = (e) => {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        capturedImageUrl = reader.result;
+        preview = true;
+        dispatch("capture", {
+          capturedImageUrl,
+        });
+      };
+    };
+    input.click();
+  };
 
   onMount(() => {
     showVideoCamera();
@@ -83,7 +100,6 @@
 </script>
 
 <div class="w-full h-full object-fill overflow-clip">
-
   <!-- svelte-ignore a11y-media-has-caption -->
   <div class="relative overflow-clip">
     <video bind:this={videoSource} class="w-full h-screen object-cover" />
@@ -97,7 +113,7 @@
             class="w-20 aspect-square border-4 border-white rounded-full"
             on:click={screenCapture}>&nbsp;</button
           >
-          <button class="" on:click={() => {}}>
+          <button class="" on:click={fileUpload}>
             <Upload />
           </button>
         </div>
@@ -105,4 +121,3 @@
     {/if}
   </div>
 </div>
-
