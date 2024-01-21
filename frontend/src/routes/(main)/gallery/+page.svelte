@@ -28,7 +28,7 @@
     // },
     ];
     onMount(() => {
-      fetch('http://localhost:3000/get_user_entries', {
+      fetch(`${import.meta.env.VITE_SERVER_ADDR}/get_user_entries`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
