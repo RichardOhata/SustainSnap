@@ -1,1 +1,5 @@
-<h1>Hello world!</h1>
+<script>
+    import Camera from "../../lib/components/Camera.svelte";
+
+</script>
+<Camera/>
