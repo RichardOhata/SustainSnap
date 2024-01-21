@@ -21,6 +21,7 @@
     loading = false;
     showPreview = true;
   };
+
 </script>
 
 {#if showPreview}

@@ -1,6 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import { createEventDispatcher } from "svelte";
+  import Upload from "../icons/Upload.svelte";
 
   /**
    * @type {HTMLVideoElement | null}
@@ -68,6 +69,11 @@
     }
   };
 
+
+
+
+
+
   onMount(() => {
     showVideoCamera();
   });
@@ -81,14 +87,19 @@
   <div class="relative overflow-hidden">
     <video bind:this={videoSource} class="w-full h-[85vh] object-cover" />
     {#if cameraShown}
-      <div class="absolute inset-0 flex justify-center items-center z-10">
-        <button
-          on:click={screenCapture}
-          type="button"
-          class=" outline outline-[5px] outline-offset-2 absolute bottom-5 text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-7 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-        >
-          <span class="sr-only">Icon description</span>
-        </button>
+      <div
+        class="absolute bottom-8 flex justify-center items-end z-10 h-full w-full"
+      >
+        <div class="flex flex-row items-center gap-4">
+          <span class="w-10">&nbsp;</span>
+          <button
+            class="w-20 aspect-square border-4 border-white rounded-full"
+            on:click={screenCapture}>&nbsp;</button
+          >
+          <button class="" on:click={() => {}}>
+            <Upload />
+          </button>
+        </div>
       </div>
     {/if}
   </div>
