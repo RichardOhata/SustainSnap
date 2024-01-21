@@ -1,10 +1,11 @@
-export const process_image = async (file) => {
-	const response = await fetch('/api/process_image', {
+export const process_image = async (image) => {
+
+	const response = await fetch('http://localhost:1345/api/process_image', {
 		method: 'POST',
 		headers: {
-			'Content-Type': 'image/jpeg',
+			'Content-Type': 'application/json',
 		},
-		body: file,
+		body: JSON.stringify({ image }),
 	});
 
 	const data = await response.json();

@@ -19,33 +19,39 @@ async function generate_metrics(context) {
     return response.choices[0].message.content;
 }
 
-async function process_image(file, type = "url") {
+async function process_image(file) {
 
-    const response = await openai.chat.completions.create({
-        model: "gpt-4-vision-preview",
-        messages: [
-            {
-                role: "user",
-                content: [
-                    { type: "text", text: "Answer only with a json object in plain text in a single line with keys: label, bin, co2. where label is what the object is, bin is one of 3 values, O, R or L, meaning organic, recycling and landfill respectively . Base your answers on BC, Canada garbage disposal guidelines. co2 should return a number that is an estimation of how much co2 was prevented to be produced if the waste did not go into a landfill. If the object in image cannot be disopsed or any other conflict, just send a X in the bin key." },
-                    {
-                        type: "image_url",
-                        image_url: {
-                            "url": type === "url" ? file : `data:image/jpeg;base64,${file}`
+    console.log("Processing image");
+
+    let response;
+    try {
+        response = await openai.chat.completions.create({
+            model: "gpt-4-vision-preview",
+            messages: [
+                {
+                    role: "user",
+                    content: [
+                        { type: "text", text: "Answer only with a json object in plain text in a single line with keys: label, bin, co2. where label is what the object is, bin is one of 3 values, O, R or L, meaning organic, recycling and landfill respectively . Base your answers on BC, Canada garbage disposal guidelines. co2 should return a number that is an estimation of how much co2 was prevented to be produced if the waste did not go into a landfill. If the object in image cannot be disopsed or any other conflict, just send a X in the bin key." },
+                        {
+                            type: "image_url",
+                            image_url: {
+                                "url": file 
+                            },
                         },
-                    },
-                ],
-            },
-        ],
-    });
+                    ],
+                },
+            ],
+        });
+    } catch (error) {
+        console.log(error);
+    }
 
     let fact = "";
     if (JSON.parse(response.choices[0].message.content).bin !== "X") {
         fact = await generate_metrics(response.choices[0].message.content);
     }
 
-    console.log(response.choices[0].message.content);
-    console.log(metrics);
+    console.log("Finished processing");
 
     return { ...JSON.parse(response.choices[0].message.content), fact: fact };
 }

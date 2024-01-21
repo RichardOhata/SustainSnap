@@ -23,7 +23,6 @@
       icon: Gallery,
     },
   ];
-  console.log($page);
 </script>
 
 <nav class="border-t shadow-md fixed bottom-0 w-full bg-[#223D23] pb-8 pt-4 z-50">

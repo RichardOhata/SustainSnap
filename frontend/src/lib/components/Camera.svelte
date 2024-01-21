@@ -38,8 +38,11 @@
   const screenCapture = () => {
     if (videoSource) {
       const canvas = document.createElement("canvas");
-      canvas.width = videoSource.videoWidth;
-      canvas.height = videoSource.videoHeight;
+
+      console.log(videoSource.videoWidth, videoSource.videoHeight, "size (in mb):", videoSource.videoWidth * videoSource.videoHeight * 4 / 1000000);
+
+      canvas.width = videoSource.videoWidth / 2;
+      canvas.height = videoSource.videoHeight / 2;
 
       const ctx = canvas.getContext("2d");
 
