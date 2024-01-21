@@ -26,7 +26,45 @@
   
  
   </script>
-  
+
+<style>
+  .sign-up-container {
+    max-width: 350px;
+    margin: auto;
+    padding: 55px;
+    justify-content: center;
+    align-items: center;
+    border: 1 px solid whitesmoke;
+    border-radius: 8px;
+    background-color: whitesmoke;
+  }
+
+  .create-account-container {
+    max-width: 350px;
+    margin: auto;
+    padding: 15px;
+    justify-content: center;
+    border: 1 px solid whitesmoke;
+    border-radius: 8px;
+    background-color: whitesmoke;
+  }
+
+  button {
+      background-color: #4caf50;
+      color: #fff;
+      padding: 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+  }
+
+  button:hover {
+    background-color: #45a049;
+  }
+
+</style>
+
+<div class ="sign-up-container">
   <form on:submit|preventDefault={handleSignup}>
     <label>
       Username:
@@ -42,4 +80,4 @@
     </label>
     <button type="submit">Signup</button>
   </form>
-  
+</div>

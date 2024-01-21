@@ -1,6 +1,7 @@
 <script>
     let email= '';
     let password = '';
+    let destination = "http://localhost:5174/signup";
   
     const handleLogin = async () => {
       try {
@@ -22,16 +23,60 @@
       }
     };
   </script>
+
+  <style>
+    .login-container {
+      max-width: 350px;
+      margin: auto;
+      padding: 55px;
+      justify-content: center;
+      align-items: center;
+      border: 1 px solid whitesmoke;
+      border-radius: 8px;
+      background-color: whitesmoke;
+    }
+
+    .create-account-container {
+      max-width: 350px;
+      margin: auto;
+      padding: 15px;
+      justify-content: center;
+      border: 1 px solid whitesmoke;
+      border-radius: 8px;
+      background-color: whitesmoke;
+    }
+
+    button {
+        background-color: #4caf50;
+        color: #fff;
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+
+  </style>
   
-  <form on:submit|preventDefault={handleLogin}>
-    <label>
-      email:
+  <div class= "login-container">
+    <form on:submit|preventDefault={handleLogin}>
+      <label>
+      Email:
       <input type="text" bind:value={email} />
     </label>
     <label>
       Password:
       <input type="password" bind:value={password} />
     </label>
-    <button type="submit">Login</button>
+    <button type="submit">Log In</button>
   </form>
+  </div>
+
+  <div class ="create-account-container">
+    <button on:click={() => window.location.href = destination}> Don't have an account? Sign Up</button>
+  </div>
   
