@@ -18,6 +18,13 @@
       points: 10,
       thumbnail: "https://picsum.photos/200/300",
     },
+    {
+      label: "Plastic Bottle",
+      bin: "R",
+      points: 10,
+      thumbnail: "https://picsum.photos/200/300",
+    },
+    
   ];
 
   $: totalPoints = 0;

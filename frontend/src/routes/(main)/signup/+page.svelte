@@ -15,6 +15,9 @@
     });
 
     if (!response.ok) {
+        if (response.status === 400) {
+            console.log(response);
+        }
       throw new Error('Signup failed');
     }
 
