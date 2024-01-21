@@ -3,7 +3,7 @@ const OpenAI = require("openai");
 
 const openai = new OpenAI();
 
-async function main() {
+async function test_ai() {
 
     const response = await openai.chat.completions.create({
         model: "gpt-4-vision-preview",
@@ -23,6 +23,5 @@ async function main() {
         ],
     });
     console.log(response.choices[0]);
+    return response.choices[0];
 }
-
-main()

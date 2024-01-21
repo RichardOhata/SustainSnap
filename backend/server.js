@@ -2,15 +2,16 @@
 const express = require('express');
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const vision = require("@google-cloud/vision");
-const uri = "mongodb+srv://richardohata:sWjzFb4Z8Rc7BoYO@cluster0.crtjcno.mongodb.net/?retryWrites=true&w=majority";
+
+
 // Create an Express application
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 
 app.use(express.json());
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
-const client = new MongoClient(uri, {
+const client = new MongoClient(process.env.MONGODB_URI, {
     serverApi: {
       version: ServerApiVersion.v1,
       strict: true,
@@ -32,7 +33,6 @@ visionClient.labelDetection('0_7jYE1-Za4AzaJdru.webp').then((result) =>{
     console.error("Error", err);
 });
 
-
   async function run() {
     try {
       // Connect the client to the server	(optional starting in v4.7)
@@ -41,7 +41,6 @@ visionClient.labelDetection('0_7jYE1-Za4AzaJdru.webp').then((result) =>{
       await client.db("admin").command({ ping: 1 });
       console.log("Pinged your deployment. You successfully connected to MongoDB!");
 
-      ai_test();
     } finally {
       // Ensures that the client will close when you finish/error
       await client.close();
@@ -52,6 +51,11 @@ visionClient.labelDetection('0_7jYE1-Za4AzaJdru.webp').then((result) =>{
 // Sample route
 app.get('/', (req, res) => {
   res.send('Hello, Express!');
+});
+
+app.get('/api/hello', (req, res) => {
+  test_ai();
+  res.json({ message: 'Hello from server!' });
 });
 
 // Sample API route
