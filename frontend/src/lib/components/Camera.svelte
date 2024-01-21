@@ -87,11 +87,11 @@
     <h1>Loading</h1>
   {/if}
   <!-- svelte-ignore a11y-media-has-caption -->
-  <div class="relative overflow-hidden">
-    <video bind:this={videoSource} class="w-full h-[85vh] object-cover" />
+  <div class="relative overflow-clip">
+    <video bind:this={videoSource} class="w-full h-screen object-cover" />
     {#if cameraShown}
       <div
-        class="absolute bottom-8 flex justify-center items-end z-10 h-full w-full"
+        class="absolute bottom-40 flex justify-center items-end z-10 h-full w-full"
       >
         <div class="flex flex-row items-center gap-4">
           <span class="w-10">&nbsp;</span>
