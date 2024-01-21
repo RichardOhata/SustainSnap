@@ -43,7 +43,7 @@
   <img class="trophy" src={user.imageUrl} alt="trophy">
   {#each scores as {username, score}, index (index + 1)}
   <div>
-    <p class="leaderboard-entry">{index}. {username} &nbsp; &nbsp; &nbsp; {score}</p>
+    <p class="leaderboard-entry">{index+1}. {username} &nbsp; &nbsp; &nbsp; {score}</p>
   </div>
   <br>
 

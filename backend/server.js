@@ -4,7 +4,8 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const { process_image } = require('./openai');
 const jwt = require('jsonwebtoken');
-
+const bcrypt = require('bcrypt')
+const saltRounds = 10;  
 const app = express();
 app.use(cookieParser());
 require('dotenv').config();
@@ -108,7 +109,10 @@ app.post('/signup', async (req, res) => {
       console.log("Email already exists");
       return res.status(400).json({ error: 'Email already in use. ', message: "Email already in use" });
     }
-    const newUser = { username, email, password };
+   
+    const salt = bcrypt.genSaltSync(saltRounds);
+    const hashedPassword = bcrypt.hashSync(password, salt)
+    const newUser = { username, email, password: hashedPassword };
     const result = await usersCollection.insertOne(newUser);
     console.log(`User data inserted with ID: ${result.insertedId}`);
     // Respond with success message and user data
@@ -137,12 +141,13 @@ app.post('/login', async (req, res) => {
     const database = client.db('NWHacks');
     const usersCollection = database.collection('Users');
 
-    const user = await usersCollection.findOne({ email, password });
-
-    if (!user) {
+    const user = await usersCollection.findOne({ email });
+ 
+    if (!user || !(await bcrypt.compare(password, user.password))) {
       // If no user is found, return an authentication error
       return res.status(401).json({ error: 'Invalid email or password.', message: 'Invalid email or password.' });
     }
+
     const access_token = jwt.sign({username: user.username}, secretKey, {
         expiresIn: '1hr',
         algorithm: 'HS256'
