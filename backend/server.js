@@ -1,11 +1,7 @@
-// Import required modules
 const express = require('express');
 const { MongoClient, ServerApiVersion } = require('mongodb');
-const dotenv = requrie('dotenv');
-
-// Create an Express application
 const app = express();
-dotenv.config();
+require('dotenv').config();
 const uri = process.env.URI || " ";
 const PORT = process.env.PORT || 3000;
 
@@ -19,9 +15,6 @@ const client = new MongoClient(uri, {
       deprecationErrors: true,
     }
   });
-
-
-
 
   async function run() {
     try {
@@ -79,8 +72,39 @@ app.post('/signup', async (req, res) => {
     // Ensure that the client will close when you finish/error
     await client.close();
   }
+});
+
+app.post('/login', async (req, res) => {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+        return res.status(400).json({ error: 'Invalid data. Please provide email and password.' });
+      }
+
+      try {
+        // Connect to MongoDB
+        await client.connect();
+
+        // Find the user in the "Users" collection based on email and password
+        const database = client.db('NWHacks');
+        const usersCollection = database.collection('Users');
+
+        const user = await usersCollection.findOne({ email, password });
+
+        if (!user) {
+            // If no user is found, return an authentication error
+            return res.status(401).json({ error: 'Invalid email or password.' });
+        }
+        return res.status(200).json({ message: 'Login successful!', user });
+    } catch (error) {
+        console.error('Error during login:', error);
+        return res.status(500).json({ error: 'Internal Server Error' });
+    } finally {
+        await client.close();
+    }
 })
-// Start the server
+
+
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
