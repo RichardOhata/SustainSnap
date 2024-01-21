@@ -30,11 +30,22 @@
     {/key}
   </div>
 
-  <div class="flex flex-col">
-    <span>{data?.label}</span>
-    <span>{binMap[data?.bin]}</span>
-    <span>{data?.fact}</span>
-  </div>
+  {#if data.bin === "X"}
+    <div class="w-full flex items-center justify-center text-2xl text-center">
+      Could not identify object as trash. <br /> Please try again.
+    </div>
+  {:else}
+    <div
+      class="flex flex-col items-center text-[#1B4967] text-lg w-full px-2 text-left"
+    >
+      <p class="flex flex-row justify-between w-full">
+        <span class="max-w-[75%] break-words">{data.label}</span>
+        <span class="">{data.pts}pts</span>
+      </p>
+      <p class="w-full">{binMap[data.bin]}</p>
+      <p class="w-full">{data.fact}</p>
+    </div>
+  {/if}
 
   <div>
     <button

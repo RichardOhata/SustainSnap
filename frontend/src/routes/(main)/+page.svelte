@@ -2,7 +2,8 @@
   import Camera from "$lib/components/Camera.svelte";
   import Preview from "$lib/components/Preview.svelte";
   import { slide } from "svelte/transition";
-  import { process_image } from "$lib/utils/ai";
+  import { process_image } from "$lib/utils/ai.api";
+  import { galleryBounce } from "$lib/utils/nav.store";
 
   $: showPreview = false;
   $: capturedImageUrl = null;
@@ -21,6 +22,12 @@
 
     loading = false;
     showPreview = true;
+
+    $galleryBounce = true;
+    setTimeout(() => {
+      $galleryBounce = false; 
+    }, 3000);
+
   };
 </script>
 
