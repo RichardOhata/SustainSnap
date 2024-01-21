@@ -1,4 +1,6 @@
 <script lang='ts'>
+    import { onMount } from "svelte";
+
     let user = { 
       name: "John Doe",
       weeklyRank: 0,
@@ -9,7 +11,44 @@
       startDate: "2024-01-20",
       imageUrl: "/trophy.png"
   }
+
+  let scores = [];
+  onMount(() => {
+    fetch('http://localhost:3000/get_leaderboard', {
+      method: 'GET',
+      headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+      }).then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(data => {
+      scores = data.sort((a, b) => b.score - a.score);
+    })
+    .catch(error => {
+    // Handle errors
+    console.error('Error fetching entries:', error);
+  });
+  })
+  
 </script>
+
+
+<div class="leaderboard">
+  <h1 class="leaderboard-header">Leaderboard</h1>
+  <img class="trophy" src={user.imageUrl} alt="trophy">
+  {#each scores as {username, score}, index (index + 1)}
+  <div>
+    <p class="leaderboard-entry">{index}. {username} &nbsp; &nbsp; &nbsp; {score}</p>
+  </div>
+  <br>
+
+ {/each}
+</div>
 
 <style>
   .leaderboard {
@@ -47,21 +86,6 @@
       color: white;
       font-weight: bold;
   }
+  
 
 </style>
-
-<div class="leaderboard">
-  <h1 class="leaderboard-header">Leaderboard</h1>
-  <img class="trophy" src={user.imageUrl} alt="trophy">
-  <p class="leaderboard-entry">1. Jane Doe &nbsp; &nbsp; &nbsp; 1000000</p>
-  <br>
-  <p class="leaderboard-entry">2. Jane Doe &nbsp; &nbsp; &nbsp; 750000</p>
-  <br>
-  <p class="leaderboard-entry">3. Jane Doe &nbsp; &nbsp; &nbsp; &nbsp; 650000</p>
-  <br>
-  <p class="leaderboard-entry">4. Jane Doe &nbsp; &nbsp; &nbsp; 500000</p>
-  <br>
-  <p class="leaderboard-entry">5. Jane Doe &nbsp; &nbsp; &nbsp; 350000</p>
-  <br>
-  <p class="leaderboard-entry">6. Jane Doe &nbsp; &nbsp; &nbsp; 150000</p>
-</div>

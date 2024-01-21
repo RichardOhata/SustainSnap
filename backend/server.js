@@ -172,6 +172,13 @@ app.post('/create_entry', jwtAuthentication, async (req, res) => {
         const database = client.db('NWHacks');
         const entryCollection = database.collection('Entries');
         const result = await entryCollection.insertOne(entry);
+
+        const scoreCollection = database.collection('Scores');
+        
+        await scoreCollection.updateOne(
+            {username: req.payload.username}, 
+            {$inc: {score: parseInt(points)}}, 
+            {upsert: true});
         return res.status(201).json({ message: 'Entry created successfully!' });
       }
         catch (error) {
@@ -207,25 +214,25 @@ app.get('/get_user_entries', jwtAuthentication, async (req, res) => {
       }
 })
 
-app.get('/get_entries', jwtAuthentication, async (req, res) => {
+app.get('/get_leaderboard', async (req, res) => {
     try {
         // Connect to MongoDB
         await client.connect();
     
         // Access the "Entries" collection
         const database = client.db('NWHacks');
-        const entryCollection = database.collection('Entries');
+        const scoreCollection = database.collection('Scores');
     
         // Retrieve all entries from the collection
-        const entries = await entryCollection.find({}).toArray();
+        const scores = await scoreCollection.find({}).toArray();
     
         // Close the MongoDB connection
         await client.close();
     
         // Send the entries as JSON response
-        return res.json(entries);
+        return res.json(scores);
       } catch (error) {
-        console.error('Error while fetching entries:', error);
+        console.error('Error while fetching scores:', error);
         res.status(500).json({ error: 'Internal Server Error' });
       }
 })
