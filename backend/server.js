@@ -1,5 +1,6 @@
 const express = require('express');
 const { MongoClient, ServerApiVersion } = require('mongodb');
+const session = require('express-session');
 const bodyParser = require('body-parser');
 const { process_image } = require('./openai');
 
@@ -10,6 +11,12 @@ const uri = process.env.URI || " ";
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json({ limit: '50mb' }));
+
+app.use(session({
+    secret: 'your-secret-key',
+    resave: false,
+    saveUninitialized: true,
+  }));
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -132,6 +139,7 @@ app.post('/login', async (req, res) => {
       // If no user is found, return an authentication error
       return res.status(401).json({ error: 'Invalid email or password.', message: 'Invalid email or password.' });
     }
+    req.session.username = user.username;
     return res.status(200).json({ message: 'Login successful!', user });
   } catch (error) {
     console.error('Error during login:', error);

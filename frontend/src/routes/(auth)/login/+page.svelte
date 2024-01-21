@@ -17,7 +17,7 @@
        
         if (response.ok) {
           console.log('Login Successful', data);
-        
+          goto('/');
         } else if (response.status === 401) {
           errorMsg = data.message;
           throw new Error('Login Failed');
