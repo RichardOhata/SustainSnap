@@ -9,6 +9,10 @@
        const {data, response} = await login(email, password);
         if (response.ok) {
           console.log('Login Successful', data);
+
+          localStorage.removeItem('username');
+          localStorage.setItem('username', JSON.stringify(data.user.username));
+
           goto('/');
         } else if (response.status === 401) {
           errorMsg = data.message;

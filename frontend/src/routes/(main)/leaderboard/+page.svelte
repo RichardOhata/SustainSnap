@@ -37,7 +37,7 @@
   });
 </script>
 
-<div class="leaderboard h-screen overflow-x-auto pb-40 p-4">
+<div class="leaderboard bg-[#1b3a0d] h-screen overflow-y-auto pb-40 p-4">
   <h1 class="pt-4 text-white font-semibold text-2xl">Leaderboard</h1>
   <img class="trophy py-4" src={user.imageUrl} alt="trophy" />
   {#each scores as { username, score }, index (index + 1)}
@@ -55,7 +55,6 @@
     max-width: 100%;
     text-align: center;
     margin: 0 auto;
-    background-color: #1b3a0d;
     text-align: center;
   }
 

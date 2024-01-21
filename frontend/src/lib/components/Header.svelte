@@ -10,7 +10,13 @@
     <span class="text-xl text-white font-lemon"> Clean Sweep </span>
     <button
       class="transition duration-150 ease-in-out border border-white rounded-full object-cover"
-      on:click={() => goto("/profile")}
+      on:click={() => {
+        if (localStorage.getItem("username")) {
+          goto("/profile");
+        } else {
+          goto("/login");
+        }
+      }}
     >
       <User />
     </button>
