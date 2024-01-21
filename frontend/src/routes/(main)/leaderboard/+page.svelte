@@ -37,9 +37,9 @@
   });
 </script>
 
-<div class="leaderboard">
-  <h1 class="leaderboard-header">Leaderboard</h1>
-  <img class="trophy" src={user.imageUrl} alt="trophy" />
+<div class="leaderboard h-screen overflow-x-auto pb-40 p-4">
+  <h1 class="pt-4 text-white font-semibold text-2xl">Leaderboard</h1>
+  <img class="trophy py-4" src={user.imageUrl} alt="trophy" />
   {#each scores as { username, score }, index (index + 1)}
     <div>
       <p class="leaderboard-entry">
@@ -55,7 +55,6 @@
     max-width: 100%;
     text-align: center;
     margin: 0 auto;
-    padding: 3px;
     background-color: #1b3a0d;
     text-align: center;
   }
@@ -63,7 +62,6 @@
   .trophy {
     width: 15%;
     margin: 0 auto;
-    padding: 5px;
   }
 
   .leaderboard-entry {
@@ -81,9 +79,4 @@
     background-color: rgba(40, 60, 36);
   }
 
-  .leaderboard-header {
-    font-size: 1.5rem;
-    color: white;
-    font-weight: bold;
-  }
 </style>
