@@ -25,8 +25,7 @@
                         ],
                         "headers": {
                                 "Access-Control-Allow-Origin": "https://sustain-snap-frontend.vercel.app",
-                                "Access-Control-Allow-Credentials": true,
-                                "Access-Control-Allow-Headers": "Content-Type, Authorization, Content-Length, X-Requested-With"
+                                "Access-Control-Allow-Credentials": true
                         }
                 }
         ]
