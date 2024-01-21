@@ -155,9 +155,9 @@ app.post('/login', async (req, res) => {
     });
     res.cookie('access_token', access_token, {
         path:"/",
-        secure: false,
+        secure: true,
         httpOnly: true,
-        sameSite: "none",
+        sameSite: "strict",
         maxAge: 3600000,
     })
     return res.status(200).json({ message: 'Login successful!', user });
