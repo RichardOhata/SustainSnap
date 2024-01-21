@@ -36,18 +36,7 @@
       align-items: center;
       border: 1 px solid whitesmoke;
       border-radius: 8px;
-      /* background-color: whitesmoke; */
     }
-
-    /* .create-account-container {
-      max-width: 350px;
-      margin: auto;
-      padding: 15px;
-      justify-content: center;
-      border: 1 px solid whitesmoke;
-      border-radius: 8px;
-      background-color: whitesmoke;
-    } */
 
     button {
         background-color: rgba(27, 49, 28, 1);
