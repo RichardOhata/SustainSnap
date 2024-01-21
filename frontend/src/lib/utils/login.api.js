@@ -1,5 +1,5 @@
 export const login = async (email, password) => {
-    const response = await fetch('http://localhost:3000/login', {
+    const response = await fetch(`${import.meta.env.VITE_SERVER_ADDR}/login`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
