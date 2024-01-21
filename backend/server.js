@@ -44,10 +44,10 @@ run().catch(console.dir);
 
 // Error handling middleware
 app.use(function (req, res, next) {
-  res.setHeader("Access-Control-Allow-Origin", "https://sustain-snap-frontend.vercel.app");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, Content-Length, X-Requested-With");
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  // res.setHeader("Access-Control-Allow-Origin", "https://sustain-snap-frontend.vercel.app");
+  // res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE, OPTIONS");
+  // res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, Content-Length, X-Requested-With");
+  // res.setHeader('Access-Control-Allow-Credentials', 'true');
 
   if (req.method === "OPTIONS") { 
     return res.sendStatus(204);
