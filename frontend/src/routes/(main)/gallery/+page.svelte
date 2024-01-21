@@ -7,28 +7,34 @@
     L: "Landfill",
   };
 
-  const galleryObjects = [
-    {
-      label: "Plastic Bottle",
-      bin: "R",
-      points: 10,
-      thumbnail: "https://picsum.photos/200/300",
-    },
-    {
-      label: "Plastic Bottle",
-      bin: "R",
-      points: 10,
-      thumbnail: "https://picsum.photos/200/300",
-    },
-    {
-      label: "Plastic Bottle",
-      bin: "R",
-      points: 10,
-      thumbnail: "https://picsum.photos/200/300",
-    },
+  let galleryObjects = [
+    // {
+    //   label: "Plastic Bottle",
+    //   bin: "R",
+    //   points: 10,
+    //   thumbnail: "https://picsum.photos/200/300",
+    // },
+    // {
+    //   label: "Plastic Bottle",
+    //   bin: "R",
+    //   points: 10,
+    //   thumbnail: "https://picsum.photos/200/300",
+    // },
+    // {
+    //   label: "Plastic Bottle",
+    //   bin: "R",
+    //   points: 10,
+    //   thumbnail: "https://picsum.photos/200/300",
+    // },
     ];
     onMount(() => {
-      fetch('http://localhost:3000/get_entries')
+      fetch('http://localhost:3000/get_user_entries', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+      })
   .then(response => {
     if (!response.ok) {
       throw new Error('Network response was not ok');
@@ -36,22 +42,21 @@
     return response.json();
   })
   .then(entries => {
+    galleryObjects = entries.map(entry => ({
+      label: entry.label,
+      points: entry.points,
+      thumbnail: entry.image,
+    }))
     // Handle the retrieved entries
-    const imageData = entries[0].image;
-   
-    document.getElementById("test").src = imageData;
-    console.log(entries[0].image);
   })
   .catch(error => {
     // Handle errors
     console.error('Error fetching entries:', error);
   });
     })
- 
 
   $: totalPoints = 0;
 </script>
-<img id="test">
 <div class="p-4 font-semibold text-xl">Total Points: {totalPoints}</div>
 
 <div class="flex flex-wrap justify-between p-4 w-full">

@@ -5,6 +5,7 @@ export const post_entry = async (label, points, image) => {
 		headers: {
 			'Content-Type': 'application/json',
 		},
+        credentials: "include",
 		body: JSON.stringify({ label, points, image }),
 	});
 

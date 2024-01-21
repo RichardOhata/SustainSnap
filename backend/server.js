@@ -1,21 +1,19 @@
 const express = require('express');
 const { MongoClient, ServerApiVersion } = require('mongodb');
-const session = require('express-session');
+const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const { process_image } = require('./openai');
+const jwt = require('jsonwebtoken');
 
 const app = express();
+app.use(cookieParser());
 require('dotenv').config();
 const uri = process.env.URI || " ";
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json({ limit: '50mb' }));
 
-app.use(session({
-    secret: 'your-secret-key',
-    resave: false,
-    saveUninitialized: true
-  }));
+const secretKey = 'your-secret-key';
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -41,17 +39,7 @@ async function run() {
 }
 run().catch(console.dir);
 
-// Sample route
-app.get('/', (req, res) => {
-  res.send('Hello, Express!');
-});
 
-// Sample API route
-app.post('/api/data', (req, res) => {
-  const { data } = req.body;
-  // Process the data and send a response
-  res.json({ message: `Received data: ${data}` });
-});
 
 // Error handling middleware
 app.use(function (req, res, next) {
@@ -62,9 +50,25 @@ app.use(function (req, res, next) {
   if (req.method === "OPTIONS") {
     return res.sendStatus(204);
   }
-  console.log(req.session);
   next();
 });
+
+const jwtAuthentication = (req, res, next) => {
+    const token = req.cookies.access_token;
+    try {
+        const payload = jwt.verify(token, secretKey);
+        console.log(payload);
+        req.payload = payload
+        next()
+    } catch (err) {
+        res.clearCookie('token');
+        res.status(401).json({
+            success: false,
+            error: "error",
+            message:"error"
+        });
+    }
+}
 
 app.post('/api/process_image', async (req, res) => {
 
@@ -75,7 +79,6 @@ app.post('/api/process_image', async (req, res) => {
     console.log(error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
-
 });
 
 
@@ -140,8 +143,17 @@ app.post('/login', async (req, res) => {
       // If no user is found, return an authentication error
       return res.status(401).json({ error: 'Invalid email or password.', message: 'Invalid email or password.' });
     }
-    req.session.username = user.username;
-    req.session.save();
+    const access_token = jwt.sign({username: user.username}, secretKey, {
+        expiresIn: '1hr',
+        algorithm: 'HS256'
+    });
+    res.cookie('access_token', access_token, {
+        path:"/",
+        secure: false,
+        httpOnly: true,
+        sameSite: "Lax",
+        maxAge: 3600000,
+    })
     return res.status(200).json({ message: 'Login successful!', user });
   } catch (error) {
     console.error('Error during login:', error);
@@ -151,9 +163,9 @@ app.post('/login', async (req, res) => {
   }
 })
 
-app.post('/create_entry', async (req, res) => {
+app.post('/create_entry', jwtAuthentication, async (req, res) => {
     const {label, points, image} = req.body;
-    const entry = {username: req.session.username, label, points, image};
+    const entry = {username: req.payload.username, label, points, image};
     try {
         // Connect to MongoDB
         await client.connect();
@@ -171,8 +183,31 @@ app.post('/create_entry', async (req, res) => {
     } 
 })
 
-app.get('/get_entries', async (req, res) => {
-    console.log(req.session);
+app.get('/get_user_entries', jwtAuthentication, async (req, res) => {
+    try {
+        const username = req.payload.username;
+        // Connect to MongoDB
+        await client.connect();
+    
+        // Access the "Entries" collection
+        const database = client.db('NWHacks');
+        const entryCollection = database.collection('Entries');
+    
+        // Retrieve all entries from the collection
+        const entries = await entryCollection.find({username}).toArray();
+    
+        // Close the MongoDB connection
+        await client.close();
+    
+        // Send the entries as JSON response
+        return res.json(entries);
+      } catch (error) {
+        console.error('Error while fetching entries:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+      }
+})
+
+app.get('/get_entries', jwtAuthentication, async (req, res) => {
     try {
         // Connect to MongoDB
         await client.connect();
