@@ -1,7 +1,7 @@
 <script>
+   import { goto } from "$app/navigation";
     let email= '';
     let password = '';
-    let destination = "http://localhost:5174/signup";
   
     const handleLogin = async () => {
       try {
@@ -77,6 +77,6 @@
   </div>
 
   <div class ="create-account-container">
-    <button on:click={() => window.location.href = destination}> Don't have an account? Sign Up</button>
+    <button on:click={() => goto('/signup')}> Don't have an account? Sign Up</button>
   </div>
   

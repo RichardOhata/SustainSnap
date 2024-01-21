@@ -69,7 +69,6 @@ app.use(function (req, res, next) {
 app.post('/signup', async (req, res) => {
   const { username, email, password } = req.body;
   console.log(username + email, password);
-  // Basic validation (you should add more robust validation in a real application)
   if (!username || !email || !password) {
     return res.status(400).json({ error: 'Invalid data. Please provide username, email, and password.' });
   }
@@ -81,7 +80,18 @@ app.post('/signup', async (req, res) => {
     // Insert user data into the "Users" collection in the "NWHacks" database
     const database = client.db('NWHacks');
     const usersCollection = database.collection('Users');
-
+    // Check for exisiting username
+    const existingUserName = await usersCollection.findOne({username});
+    if (existingUserName) {
+        console.log('Username already exists');
+        return res.status(400).json({error: 'Username already in use. ', message: "Username already in use"});
+    }
+    // Check for exisiting email
+    const existingEmail = await usersCollection.findOne({email});
+    if (existingEmail) {
+        console.log("Email already exists");
+        return res.status(400).json({error: 'Email already in use. ', message: "Email already in use"});
+    }
     const newUser = { username, email, password };
     const result = await usersCollection.insertOne(newUser);
     console.log(`User data inserted with ID: ${result.insertedId}`);
@@ -91,7 +101,7 @@ app.post('/signup', async (req, res) => {
     console.error('Error during signup:', error);
     return res.status(500).json({ error: 'Internal Server Error' });
   } finally {
-    // Ensure that the client will close when you finish/error
+    
     await client.close();
   }
 });

@@ -1,6 +1,8 @@
 const OpenAI = require("openai");
-
-const openai = new OpenAI();
+require('dotenv').config();
+const openai = new OpenAI({
+    apiKey: process.env.API_KEY
+});
 
 
 async function generate_metrics(context) {

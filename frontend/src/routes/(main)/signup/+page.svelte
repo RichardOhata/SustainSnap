@@ -1,4 +1,5 @@
 <script>
+    import { goto } from "$app/navigation";
     let username = '';
     let email = '';
     let password = '';
@@ -19,6 +20,7 @@
 
     const data = await response.json();
     console.log('Signup successful:', data);
+    goto('/login');
   } catch (error) {
     console.error('Error during signup:', error);
   }
