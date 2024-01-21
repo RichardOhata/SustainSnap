@@ -157,7 +157,7 @@ app.post('/login', async (req, res) => {
         path:"/",
         secure: false,
         httpOnly: true,
-        sameSite: "Lax",
+        sameSite: "none",
         maxAge: 3600000,
     })
     return res.status(200).json({ message: 'Login successful!', user });
