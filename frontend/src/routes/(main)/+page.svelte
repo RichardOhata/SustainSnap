@@ -20,10 +20,10 @@
 
     console.log(res);
     try {
-    const result = await post_entry(res.label, res.pts, capturedImageUrl);
-    console.log('POST request successful:', result);
+      const result = await post_entry({ ...data, image: capturedImageUrl });
+      console.log("POST request successful:", result);
     } catch (error) {
-      console.error('Error in POST request:', error);
+      console.error("Error in POST request:", error);
     }
 
     loading = false;

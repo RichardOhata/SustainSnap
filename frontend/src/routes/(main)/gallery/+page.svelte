@@ -68,7 +68,6 @@
           <span class="max-w-[75%] break-words">{obj.label}</span>
           <span class="">{obj.points}pts</span>
         </p>
-        {console.log(obj.bin)}
         <p class="w-full">{binMap[obj.bin]}</p>
       </div>
     </div>

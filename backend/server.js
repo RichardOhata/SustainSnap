@@ -170,8 +170,8 @@ app.post('/login', async (req, res) => {
 })
 
 app.post('/create_entry', jwtAuthentication, async (req, res) => {
-    const {label, points, image} = req.body;
-    const entry = {username: req.payload.username, label, points, image};
+    const {label, pts, image, bin} = req.body;
+    const entry = {username: req.payload.username, label, points:pts, image, bin};
     try {
         // Connect to MongoDB
         await client.connect();
