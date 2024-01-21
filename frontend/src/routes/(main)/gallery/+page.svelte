@@ -1,6 +1,7 @@
 <script>
     import { onMount } from "svelte";
-    import { getUseEntries } from "$libs/utils/user_entry.api"
+    import { getUserEntries } from "$lib/utils/user_entry.api.js";  
+
   const binMap = {
     R: "Recycling",
     O: "Compost",
@@ -29,8 +30,9 @@
     ];
     onMount(async() => {
       try {
-      const {entries, response} = await getUseEntries();
+      const {entries, response} = await getUserEntries();
    
+      console.log(entries);
     if (response.ok) {
       galleryObjects = entries.map(entry => ({
       label: entry.label,

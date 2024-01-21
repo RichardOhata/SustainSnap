@@ -8,6 +8,6 @@ export const getUserEntries = async () => {
         },
         credentials: 'include',
     });
-    const data = await response.json();
-    return {data, response};
+    const entries = await response.json();
+    return {entries, response};
 }
