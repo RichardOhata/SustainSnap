@@ -23,14 +23,15 @@
       icon: Gallery,
     },
   ];
+  console.log($page);
 </script>
 
-<nav class="border-t shadow-md fixed bottom-0 w-full bg-green-600 pb-8 pt-4">
-  <div class="flex flex-row w-full justify-evenly items-center">
+<nav class="border-t shadow-md fixed bottom-0 w-full bg-[#223D23] pb-8 pt-4">
+  <div class="flex flex-row w-full justify-evenly items-baseline">
     {#each navItems as navItem}
       <button
         class="transition duration-150 ease-in-out"
-        class:active={navItem.path === $page.path}
+        class:scale-150={navItem.path === $page.url.pathname}
         on:click={() => goto(navItem.path)}
       >
         <svelte:component this={navItem.icon} />
