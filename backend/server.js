@@ -154,7 +154,7 @@ app.post('/login', async (req, res) => {
     });
     res.cookie('access_token', access_token, {
         path:"/",
-        secure: false,
+        secure: true,
         httpOnly: true,
         sameSite: "Lax",
         maxAge: 3600000,
