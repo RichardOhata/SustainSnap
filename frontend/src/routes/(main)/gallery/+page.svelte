@@ -6,7 +6,7 @@
     O: "Compost",
     L: "Landfill",
   };
-
+  let totalPoints = 0;
   let galleryObjects = [
     // {
     //   label: "Plastic Bottle",
@@ -48,14 +48,15 @@
       thumbnail: entry.image,
     }))
     // Handle the retrieved entries
+    totalPoints = galleryObjects.reduce((sum, entry) => sum + parseInt(entry.points), 0);
   })
   .catch(error => {
     // Handle errors
     console.error('Error fetching entries:', error);
   });
-    })
 
-  $: totalPoints = 0;
+    });
+
 </script>
 <div class="p-4 font-semibold text-xl">Total Points: {totalPoints}</div>
 
