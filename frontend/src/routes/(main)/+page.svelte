@@ -22,7 +22,6 @@
     loading = false;
     showPreview = true;
   };
-
 </script>
 
 {#if showPreview}
@@ -40,6 +39,4 @@
   </div>
 {/if}
 
-<div class="w-full h-full">
-  <Camera on:capture={processCapture} />
-</div>
+<Camera on:capture={processCapture} />

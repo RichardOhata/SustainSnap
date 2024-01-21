@@ -6,7 +6,7 @@
 
 <Header />
 
-<div class="py-16">
+<div class="py-16 overflow-hidden h-screen">
   <slot />
 </div>
 
