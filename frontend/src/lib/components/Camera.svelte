@@ -65,27 +65,27 @@
   });
 </script>
 
-<div class="w-full h-full object-fill">
-  {#if !preview}
-    {#if loading}
-      <h1>Loading</h1>
-    {/if}
-    <!-- svelte-ignore a11y-media-has-caption -->
-    <div class="relative">
-      <video bind:this={videoSource} class="w-full h-[85vh] object-cover" />
-      {#if cameraShown}
-        <div class="absolute inset-0 flex justify-center items-center z-10">
-          <button
-            on:click={screenCapture}
-            type="button"
-            class=" outline outline-[5px] outline-offset-2 absolute bottom-5 text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-7 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          >
-            <span class="sr-only">Icon description</span>
-          </button>
-        </div>
-      {/if}
-    </div>
-  {:else}
-    <Preview capturedImage={capturedImageUrl} />
+{#if preview}
+  <Preview capturedImage={capturedImageUrl} />
+{/if}
+
+<div class="w-full h-full object-fill overflow-clip">
+  {#if loading}
+    <h1>Loading</h1>
   {/if}
+  <!-- svelte-ignore a11y-media-has-caption -->
+  <div class="relative">
+    <video bind:this={videoSource} class="w-full h-[85vh] object-cover" />
+    {#if cameraShown}
+      <div class="absolute inset-0 flex justify-center items-center z-10">
+        <button
+          on:click={screenCapture}
+          type="button"
+          class=" outline outline-[5px] outline-offset-2 absolute bottom-5 text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-7 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        >
+          <span class="sr-only">Icon description</span>
+        </button>
+      </div>
+    {/if}
+  </div>
 </div>
