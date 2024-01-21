@@ -4,7 +4,7 @@
   import { slide } from "svelte/transition";
   import { process_image } from "$lib/utils/ai.api";
   import { galleryBounce } from "$lib/utils/nav.store";
-
+  import { post_entry } from "$lib/utils/entry.api";
   $: showPreview = false;
   $: capturedImageUrl = null;
   $: loading = false;
@@ -19,6 +19,12 @@
     data = res;
 
     console.log(res);
+    try {
+    const result = await post_entry(res.label, res.pts, capturedImageUrl);
+    console.log('POST request successful:', result);
+    } catch (error) {
+      console.error('Error in POST request:', error);
+    }
 
     loading = false;
     showPreview = true;

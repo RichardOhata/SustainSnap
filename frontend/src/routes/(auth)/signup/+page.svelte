@@ -1,24 +1,15 @@
 <script>
     import { goto } from "$app/navigation";
+    import { signup } from "$lib/utils/signup.api"
     let username = '';
     let email = '';
     let password = '';
     let errorMsg = '';
     const handleSignup = async () => {
         try {
-    const response = await fetch('http://localhost:3000/signup', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({username, email, password}),
-    });
-
-    const data = await response.json();
-
-    if (response.ok) {
-        
-    console.log('Signup successful:', data);
+          const {data, response} = await signup(username, email, password);
+        if (response.ok) {   
+      console.log('Signup successful:', data);
       goto('/login');
     } else if (response.status === 400)
       {

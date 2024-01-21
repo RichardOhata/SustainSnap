@@ -1,20 +1,12 @@
 <script>
    import { goto } from "$app/navigation";
+   import { login } from "$lib/utils/login.api";
     let email= '';
     let password = '';
     let errorMsg = '';
     const handleLogin = async () => {
       try {
-        const response = await fetch('http://localhost:3000/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            }, 
-            body: JSON.stringify({email, password}),
-        });
-
-        const data = await response.json();
-       
+       const {data, response} = await login(email, password);
         if (response.ok) {
           console.log('Login Successful', data);
           goto('/');
@@ -22,8 +14,6 @@
           errorMsg = data.message;
           throw new Error('Login Failed');
         }
-       
-       
       } catch (error) {
         console.error('Error during login: ', error);
       }

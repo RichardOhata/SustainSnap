@@ -59,6 +59,7 @@ app.use(function (req, res, next) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, Content-Length, X-Requested-With");
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
   if (req.method === "OPTIONS") {
     return res.sendStatus(204);
   }
@@ -149,6 +150,49 @@ app.post('/login', async (req, res) => {
   }
 })
 
+app.post('/create_entry', async (req, res) => {
+    const {label, points, image} = req.body;
+    const entry = {username: req.session.username, label, points, image};
+    try {
+        // Connect to MongoDB
+        await client.connect();
+        const database = client.db('NWHacks');
+        const entryCollection = database.collection('Entries');
+        const result = await entryCollection.insertOne(entry);
+        return res.status(201).json({ message: 'Entry created successfully!' });
+      }
+        catch (error) {
+        console.error('Error during entry creation:', error);
+        return res.status(500).json({ error: 'Internal Server Error' });
+      } finally {
+    
+        await client.close();
+    } 
+})
+
+app.get('/get_entries', async (req, res) => {
+    console.log(req.session);
+    try {
+        // Connect to MongoDB
+        await client.connect();
+    
+        // Access the "Entries" collection
+        const database = client.db('NWHacks');
+        const entryCollection = database.collection('Entries');
+    
+        // Retrieve all entries from the collection
+        const entries = await entryCollection.find({}).toArray();
+    
+        // Close the MongoDB connection
+        await client.close();
+    
+        // Send the entries as JSON response
+        return res.json(entries);
+      } catch (error) {
+        console.error('Error while fetching entries:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+      }
+})
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);

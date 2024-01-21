@@ -1,4 +1,6 @@
 <script>
+    import { onMount } from "svelte";
+
   const binMap = {
     R: "Recycling",
     O: "Compost",
@@ -24,12 +26,32 @@
       points: 10,
       thumbnail: "https://picsum.photos/200/300",
     },
-    
-  ];
+    ];
+    onMount(() => {
+      fetch('http://localhost:3000/get_entries')
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(entries => {
+    // Handle the retrieved entries
+    const imageData = entries[0].image;
+   
+    document.getElementById("test").src = imageData;
+    console.log(entries[0].image);
+  })
+  .catch(error => {
+    // Handle errors
+    console.error('Error fetching entries:', error);
+  });
+    })
+ 
 
   $: totalPoints = 0;
 </script>
-
+<img id="test">
 <div class="p-4 font-semibold text-xl">Total Points: {totalPoints}</div>
 
 <div class="flex flex-wrap justify-between p-4 w-full">
