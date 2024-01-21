@@ -1,6 +1,6 @@
 <script>
     import { onMount } from "svelte";
-
+    import { getUseEntries } from "$libs/utils/user_entry.api"
   const binMap = {
     R: "Recycling",
     O: "Compost",
@@ -27,36 +27,28 @@
     //   thumbnail: "https://picsum.photos/200/300",
     // },
     ];
-    onMount(() => {
-      fetch(`${import.meta.env.VITE_SERVER_ADDR}/get_user_entries`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-      })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    return response.json();
-  })
-  .then(entries => {
-    galleryObjects = entries.map(entry => ({
+    onMount(async() => {
+      try {
+      const {entries, response} = await getUseEntries();
+   
+    if (response.ok) {
+      galleryObjects = entries.map(entry => ({
       label: entry.label,
       points: entry.points,
       thumbnail: entry.image,
       bin: entry.bin
-    }))
-    // Handle the retrieved entries
+    }));
     totalPoints = galleryObjects.reduce((sum, entry) => sum + parseInt(entry.points), 0);
-  })
-  .catch(error => {
-    // Handle errors
+    
+    } else {
+      throw new Error('Network response was not ok');
+    }
+  } catch (error) {
     console.error('Error fetching entries:', error);
+  }
   });
 
-    });
+    
 
 </script>
 <div class="p-4 font-semibold text-xl">Total Points: {totalPoints}</div>
