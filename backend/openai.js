@@ -42,10 +42,11 @@ async function process_image(file) {
                 },
             ],
         });
+        console.log(response.choices[0].message.content);
     } catch (error) {
         console.log(error);
     }
-
+ 
     let fact = "";
     if (JSON.parse(response.choices[0].message.content).bin !== "X") {
         fact = await generate_metrics(response.choices[0].message.content);

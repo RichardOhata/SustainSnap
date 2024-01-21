@@ -2,7 +2,7 @@
   import XCircle from "$lib/icons/XCircle.svelte";
   import { createEventDispatcher } from "svelte";
 
-  export let capturedImage;
+  export let capturedImageUrl;
   export let data;
 
   const binMap = {
@@ -17,7 +17,7 @@
 
   $: {
     if (imgElement) {
-      imgElement.src = capturedImage;
+      imgElement.src = capturedImageUrl;
     }
   }
 

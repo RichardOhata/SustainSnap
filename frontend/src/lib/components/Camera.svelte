@@ -10,7 +10,7 @@
   let loading = false;
   let cameraShown = false;
   let preview = false;
-  export let capturedImageUrl;
+  let capturedImageUrl;
 
   const dispatch = createEventDispatcher();
 

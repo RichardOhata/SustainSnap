@@ -10,11 +10,12 @@
 
   let data;
 
-  const processCapture = async () => {
+  const processCapture = async (e) => {
     loading = true;
 
+    capturedImageUrl = e.detail.capturedImageUrl;
     const res = await process_image(capturedImageUrl);
-    data = res.data;
+    data = res;
 
     console.log(res);
 
@@ -30,7 +31,7 @@
     class="w-full h-full fixed top-0 z-[999] flex justify-center items-center"
   >
     <Preview
-      bind:capturedImage={capturedImageUrl}
+      bind:capturedImageUrl
       bind:data
       on:close={() => {
         showPreview = false;
@@ -40,5 +41,5 @@
 {/if}
 
 <div class="w-full h-full">
-  <Camera bind:capturedImageUrl on:capture={processCapture} />
+  <Camera on:capture={processCapture} />
 </div>

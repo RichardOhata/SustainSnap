@@ -62,7 +62,7 @@ app.post('/api/process_image', async (req, res) => {
 
   try {
     let api_res = await process_image(req.body.image);
-    res.json({ message: 'Hello from server!', data: api_res });
+    res.json(api_res);
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: 'Internal Server Error' });
