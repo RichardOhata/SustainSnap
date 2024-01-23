@@ -183,7 +183,7 @@ app.post('/create_entry', jwtAuthentication, async (req, res) => {
         
         await scoreCollection.updateOne(
             {username: req.payload.username}, 
-            {$inc: {score: parseInt(points)}}, 
+            {$inc: {score: parseInt(pts)}}, 
             {upsert: true});
         return res.status(201).json({ message: 'Entry created successfully!' });
       }
