@@ -39,7 +39,14 @@ async function process_image(file) {
                     content: [
                         {
                             type: "text",
-                            text: "Answer only in csv format without spaces in plain text in a single line with keys (no need to use the actual key names, just maintain the order): label, bin, co2, pts where label is what the object is, bin is one of 3 values, O, R or L, meaning organic, recycling and landfill respectively. Base your answers on BC, Canada garbage disposal guidelines. co2 should return a number that is an estimation of how much co2 was prevented to be produced if the waste did not go into a landfill. pts should be a certain amount of points on a scale of 100 to 1000 gained by disposing the object correctly, scaling depending on how good the environmental impact is. If the object in image cannot be disposed or any other conflict, just send an X in the bin key and 0 for points. If there are multiple items in image, focus on one."
+                            text: `Respond with exactly 4 comma-separated values in this order: label,bin,co2,pts. 
+                                    Do not include key names, explanations, extra lines, or any formatting — only a single line of plain text, like: "banana,O,1.2,500". 
+                                    - 'label' is the object name.
+                                    - 'bin' is one of: O (organic), R (recycling), or L (landfill).
+                                    - 'co2' is a number estimating how much CO2 (kg) was prevented by not sending it to landfill.
+                                    - 'pts' is an integer from 100 to 1000, reflecting the environmental benefit.
+                                    If the item cannot be confidently identified or disposed of, respond with: "unknown,X,0,0".
+                                    Only return the CSV line. No comments or descriptions.`
                         },
                         {
                             type: "image_url",
