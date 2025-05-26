@@ -39,14 +39,7 @@ async function process_image(file) {
                     content: [
                         {
                             type: "text",
-                            text: `Respond with exactly 4 comma-separated values in this order: label,bin,co2,pts. 
-                                    Do not include key names, explanations, extra lines, or any formatting — only a single line of plain text, like: "banana,O,1.2,500". 
-                                    - 'label' is the object name.
-                                    - 'bin' is one of: O (organic), R (recycling), or L (landfill).
-                                    - 'co2' is a number estimating how much CO2 (kg) was prevented by not sending it to landfill.
-                                    - 'pts' is an integer from 100 to 1000, reflecting the environmental benefit.
-                                    If the item cannot be confidently identified or disposed of, respond with: "unknown,X,0,0".
-                                    Only return the CSV line. No comments or descriptions.`
+                            text: "Answer only in CSV format (no spaces, no line breaks), in a single line with values in this order: label,bin,co2,pts. Use bin values: O (organic), R (recycling), L (landfill). Base your answers on BC, Canada garbage disposal guidelines. co2 should be a number estimating how much CO2 (in kg) is prevented if not landfilled. pts is a number from 100–1000, based on positive environmental impact. If the object can’t be confidently identified or has no disposal rule, return: unknown,X,0,0. Focus on one item if the image has multiple."
                         },
                         {
                             type: "image_url",
