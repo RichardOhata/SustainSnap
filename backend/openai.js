@@ -59,7 +59,7 @@ async function process_image(file) {
         return null;
     }
 
-    const split = response.choices[0].message.content.split(",");
+    const split = response.choices[0].message.content.split(",").map(s => s.trim().replace(/^"+|"+$/g, ''));
     const parsed = {
         label: split[0],
         bin: split[1],
