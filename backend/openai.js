@@ -64,7 +64,7 @@ async function process_image(file) {
         label: split[0],
         bin: split[1],
         co2: split[2],
-       pts: isNaN(Number(split[3])) ? "0" : split[3],
+        pts: isNaN(Number(split[3])) ? "0" : split[3],
     };
 
     let fact = "";
